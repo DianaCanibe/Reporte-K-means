@@ -25,6 +25,18 @@ plt.show()
 #Split de datos
 Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, random_state=1)
 
+traindata= (Xtrain.shape[0]/X.shape[0])*100
+print('Porcentaje entrenamiento')
+print(traindata)
+testdata= (Xtest.shape[0]/X.shape[0])*100
+print('Porcentaje prueba')
+print(testdata)
+#Gráfica de pastel de proporción de datos de entrenamiento y prueba
+pie = pd.DataFrame({'datos': [traindata,testdata]},
+                  index=['Train', 'Test'])
+plot = pie.plot.pie(y='datos', figsize=(5, 5))
+plt.show()
+
 # Método del codo para determinar el num. de grupos (Elbow method)
 kmeans_kwargs = {"random_state": 12}
 
@@ -50,7 +62,7 @@ model.fit(Xtrain)
 ymodel = model.predict(Xtest)
 print('Score:',accuracy_score(ytest, ymodel))
 
-#Gráfica de clásificación según el modelo
+#Gráfica de clásificación según el modelo vs clasificación original
 plt.scatter(X['length'],X['width'], s=size,c = y)
 size=ymodel*30
 plt.scatter(Xtest['length'],Xtest['width'], s=size, marker='^',c=ymodel)
